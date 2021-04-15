@@ -1,7 +1,7 @@
 # credential files
 credentials.json
 token.json
-
+env.sh
 # vscode
 .vscode/
 # Byte-compiled / optimized / DLL files

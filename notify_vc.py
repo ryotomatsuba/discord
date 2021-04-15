@@ -10,6 +10,7 @@ from CONSTS import *
 
 # discord client
 client = discord.Client()
+
 # google calendar 
 if os.path.exists('token.json'):
     creds = Credentials.from_authorized_user_file('token.json', SCOPES)
@@ -65,4 +66,4 @@ async def on_voice_state_update(member, before, after):
 async def on_message(message):
     pass
 
-client.run("ODI4ODI2MDEwMjg3NjAzNzMy.YGvOXw.MLQPptS6rfOom-AK7X1Dsu7p1fU")
+client.run(os.environ["DISCORD_API_TOKEN"])
