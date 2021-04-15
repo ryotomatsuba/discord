@@ -1,6 +1,7 @@
 import discord
 from datetime import datetime, timedelta
 import pytz
+import sys, os
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -10,8 +11,23 @@ from CONSTS import *
 # discord client
 client = discord.Client()
 # google calendar 
+if os.path.exists('token.json'):
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+# If there are no (valid) credentials available, let the user log in.
+if not creds or not creds.valid:
+    if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
+    # Save the credentials for the next run
+    with open('token.json', 'w') as token:
+        token.write(creds.to_json())
 creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 service = build('calendar', 'v3', credentials=creds)
+
+# discord 
 join_time={}
 @client.event
 async def on_ready():
@@ -19,7 +35,9 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    sys.stdout.flush()
 
+# vc in/out action
 @client.event
 async def on_voice_state_update(member, before, after):
     
