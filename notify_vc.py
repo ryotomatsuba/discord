@@ -11,22 +11,22 @@ from CONSTS import *
 # discord client
 client = discord.Client()
 
-# google calendar 
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-# If there are no (valid) credentials available, let the user log in.
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-    # Save the credentials for the next run
-    with open('token.json', 'w') as token:
-        token.write(creds.to_json())
-creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-service = build('calendar', 'v3', credentials=creds)
+# # google calendar 
+# if os.path.exists('token.json'):
+#     creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+# # If there are no (valid) credentials available, let the user log in.
+# if not creds or not creds.valid:
+#     if creds and creds.expired and creds.refresh_token:
+#         creds.refresh(Request())
+#     else:
+#         flow = InstalledAppFlow.from_client_secrets_file(
+#             'credentials.json', SCOPES)
+#         creds = flow.run_local_server(port=0)
+#     # Save the credentials for the next run
+#     with open('token.json', 'w') as token:
+#         token.write(creds.to_json())
+# creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+# service = build('calendar', 'v3', credentials=creds)
 
 # discord 
 join_time={}
@@ -60,7 +60,7 @@ async def on_voice_state_update(member, before, after):
             lounge_event['summary']=member_name
             lounge_event['start']['dateTime']=join_time[member_name]       
             lounge_event['end']['dateTime']=now
-            service.events().insert(calendarId=CALENDAR_ID, body=lounge_event).execute()
+            # service.events().insert(calendarId=CALENDAR_ID, body=lounge_event).execute()
             await alert_channel.send(msg)
 
 async def on_message(message):
