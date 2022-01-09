@@ -1,13 +1,10 @@
 import discord
-from datetime import datetime, timedelta
-import pytz
 import sys, os
 from CONSTS import *
 
 # discord client
 client = discord.Client()
 
-# discord 
 @client.event
 async def on_ready():
     print('Logged in as')
