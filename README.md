@@ -15,6 +15,7 @@ python main.py
 heroku login
 heroku git:remote -a stathack-discord-notification
 git push heroku master
+heroku scale worker=1
 ```
 
 動かない時は再起動
